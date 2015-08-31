@@ -1,0 +1,12 @@
+redis:
+  image: taomaree/php56
+  #container_name: redis_1
+  environment:
+    - TZ=Asia/Shanghai
+    - APP_PORT=9000
+  ports:
+    - "9000:9000/tcp"
+  volumes:
+    - /srv/data:/srv/data
+  restart: always
+  privileged: false

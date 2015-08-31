@@ -1,0 +1,7 @@
+*~
+*.tar.gz
+*.aria2
+*.deb
+*.rpm
+composer.phar
+installer
