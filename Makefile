@@ -13,5 +13,5 @@ debug: build
 	@docker run -ti --rm taomaree/php56 /bin/bash
 
 run: build
-	@docker run --rm taomaree/php56
+	@docker run -d taomaree/php56
 
