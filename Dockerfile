@@ -1,26 +1,22 @@
 # FROM phusion/baseimage:0.9.17
-FROM ubuntu:14.04
-MAINTAINER taomareee@gmail.com
+FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
-	TZ='Asia/Shanghai' \
+  TZ='Asia/Shanghai' \
+  LC_ALL=C.UTF-8 \
   APP_USER=app \
-  APP_DATA_DIR=/var/www \
+  APP_DATA_DIR=/app/wwwroot \
   APP_LOG_DIR=/var/log
 
-ADD composer.phar /usr/local/bin/composer 
-
-RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
- && echo "APT::Install-Suggests 0;" >> /etc/apt/apt.conf.d/01norecommends \ 
- && sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
- && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 14AA40EC0831756756D7F66C4F4EA0AAE5267A6C \
- && echo "deb http://ppa.launchpad.net/ondrej/php5-5.6/ubuntu trusty main"  > /etc/apt/sources.list.d/ondrej-php5-5_6-trusty.list \
- && apt-get update \
- && apt-get -y install  php5-fpm php5-cli php5-dev php5-gd php5-ldap php5-mcrypt php5-mysqlnd php5-xmlrpc php5-curl php5-geoip php5-pgsql php5-sqlite php-pear php-net-socket php-soap  php5-intl  libmagickwand-dev  php5-redis php5-mongo php5-memcached php5-apcu php5-imagick \
+RUN apt-get update ; \
+  apt-get install -y --no-install-recommends curl wget ca-certificates software-properties-common ;\
+  add-apt-repository -y ppa:ondrej/php ; apt-get update ; \
+  apt-get install -y --no-install-recommends vim-tiny composer php5.6-fpm php5.6-dev php-pear php5.6-common php5.6-bcmath php5.6-common php5.6-bz2 php5.6-curl php5.6-enchant \
+    php5.6-gd php5.6-imap php5.6-intl php5.6-json php5.6-ldap php5.6-mbstring php5.6-mcrypt php5.6-mysql php5.6-opcache \
+    php5.6-pspell php5.6-readline php5.6-recode php5.6-soap php5.6-sqlite3 php5.6-tidy php5.6-xml php5.6-xmlrpc php5.6-xsl php5.6-zip \
+    php5.6-pgsql php-imagick php-mongo php-mongodb php-memcache php-memcached php-apcu php-geoip php-net-socket \
  && rm -rf /var/lib/apt/lists/* /tmp/* \
  && apt-get clean \
- && chmod 755 /usr/local/bin/composer 
-
 
 EXPOSE 9000/tcp
 VOLUME ["${APP_DATA_DIR}"]
