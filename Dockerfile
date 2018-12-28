@@ -16,9 +16,9 @@ RUN apt-get update ; \
     php5.6-pspell php5.6-readline php5.6-recode php5.6-soap php5.6-sqlite3 php5.6-tidy php5.6-xml php5.6-xmlrpc php5.6-xsl php5.6-zip \
     php5.6-pgsql php-imagick php-mongo php-mongodb php-memcache php-memcached php-apcu php-geoip php-net-socket \
  && rm -rf /var/lib/apt/lists/* /tmp/* \
- && apt-get clean \
+ && apt-get clean 
 
 EXPOSE 9000/tcp
 VOLUME ["${APP_DATA_DIR}"]
 
-CMD php5-fpm -F
+CMD php-fpm5.6 -F
