@@ -8,7 +8,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
   APP_DATA_DIR=/app/wwwroot \
   APP_LOG_DIR=/var/log
 
-RUN apt-get update ; \
+RUN
+  groupmod -g 99 nogroup && usermod -u 99 -g 99 nobody  ; \
+  apt-get update ; \
   apt-get install -y --no-install-recommends curl wget ca-certificates software-properties-common ;\
   add-apt-repository -y ppa:ondrej/php ; apt-get update ; \
   apt-get install -y --no-install-recommends vim-tiny composer pkg-config php5.6-fpm php5.6-dev php-pear php5.6-common \
